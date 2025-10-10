@@ -71,8 +71,8 @@ class Bacteria {
 Bacteria[] bacteria = new Bacteria[numBacteria];
 
 void setup() {
-  fullScreen(P3D);
-  //size(1000, 1000, P3D);
+  //fullScreen(P3D);
+  size(1000, 1000, P3D);
   textAlign(CENTER);
   textSize(40);
   for(int i = 0; i < numBacteria; i++) {bacteria[i] = new Bacteria(width/2, height/2, 0, color((int) (Math.random()*205+50), (int) (Math.random()*205+50), (int) (Math.random()*205+50)), false);}
