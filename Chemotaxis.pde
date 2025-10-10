@@ -80,7 +80,7 @@ void setup() {
 
 void draw() {
  background(100);
- lights();
+ //lights();
  for(int i = 0; i < numBacteria; i++) {
    if(!mousePressed) {food.moveCam();}
    camera(width/2.0, height/2.0, height/2.0/tan(PI*30.0/180.0), camX, camY, 0, 0, 1.0, 0);
