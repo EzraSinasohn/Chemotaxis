@@ -102,31 +102,31 @@ void mouseDragged() {
   camY += -(mouseY-pmouseY);
 }
 
-void bacteriaShape(float size, int bactCol) {
+void bacteriaShape(float mult, int bactCol) {
   noStroke();
   fill(bactCol);
-  sphere(20*size);
+  sphere(20*mult);
   pushMatrix();
   fill(255);
-  translate(7*size, -5*size, 10*size);
-  sphere(10*size);
-  translate(-14*size, 0, 0);
-  sphere(10*size);
+  translate(7*mult, -5*mult, 10*mult);
+  sphere(10*mult);
+  translate(-14*mult, 0, 0);
+  sphere(10*mult);
   popMatrix();
   pushMatrix();
   fill(0);
-  translate(8*size, -5*size, 16*size);
-  sphere(5*size);
-  translate(-16*size, 0, 0);
-  sphere(5*size);
+  translate(8*mult, -5*mult, 16*mult);
+  sphere(5*mult);
+  translate(-16*mult, 0, 0);
+  sphere(5*mult);
   popMatrix();
   pushMatrix();
   stroke(0);
-  strokeWeight(size);
+  strokeWeight(mult);
   fill(255);
-  translate(0, 8*size, 15*size);
+  translate(0, 8*size, 15*mult);
   rotateX(QUARTER_PI);
-  box(10*size, 5*size, 5*size);
+  box(10*mult, 5*mult, 5*mult);
   popMatrix();
   noStroke();
 }
