@@ -1,5 +1,5 @@
 float camX, camY;
-int numBacteria = 10, size = 1, eaten = 0;
+int numBacteria = 10, mult = 1, eaten = 0;
 Food food = new Food(0, 0, 0, 0);
 class Food {
   int x, y, z, count, eatCounter;
@@ -55,7 +55,7 @@ class Bacteria {
     fill(col);
     pushMatrix();
     translate(this.x, this.y, this.z);
-    bacteriaShape(size, this.col);
+    bacteriaShape(mult, this.col);
     popMatrix();
   }
   void walk() {
@@ -124,7 +124,7 @@ void bacteriaShape(float mult, int bactCol) {
   stroke(0);
   strokeWeight(mult);
   fill(255);
-  translate(0, 8*size, 15*mult);
+  translate(0, 8*mult, 15*mult);
   rotateX(QUARTER_PI);
   box(10*mult, 5*mult, 5*mult);
   popMatrix();
