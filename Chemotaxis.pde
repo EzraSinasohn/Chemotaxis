@@ -20,8 +20,10 @@ class Food {
     translate(0, -20/((eatCounter/3)+1), 0);
     box(5/((eatCounter/3)+1), 10/((eatCounter/3)+1), 5/((eatCounter/3)+1));
     translate(0, -10, 0);
+    pushMatrix();
     rotateY(rot);
     text(eaten, 0, 0);
+    popMatrix();
     popMatrix();
   }
   void checkEat() {
