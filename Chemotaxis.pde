@@ -3,6 +3,7 @@ int numBacteria = 10, mult = 1, eaten = 0;
 Food food = new Food(0, 0, 0, 0);
 class Food {
   int x, y, z, count, eatCounter;
+  float rot;
   public Food(int x, int y, int z, int eatCounter) {
     this.x = x;
     this.y = y;
@@ -10,6 +11,7 @@ class Food {
     this.eatCounter = eatCounter;
   }
   void show() {
+    rot += PI/500;
     pushMatrix();
     fill(255, 0, 0);
     translate(this.x, this.y, this.z);
@@ -18,20 +20,27 @@ class Food {
     translate(0, -20/((eatCounter/3)+1), 0);
     box(5/((eatCounter/3)+1), 10/((eatCounter/3)+1), 5/((eatCounter/3)+1));
     translate(0, -10, 0);
+    rotateY(rot);
     text(eaten, 0, 0);
     popMatrix();
   }
   void checkEat() {
     for(int i = 0; i < numBacteria; i++) {
-      if(Math.abs(bacteria[i].x-this.x) <= 30  && Math.abs(bacteria[i].y-this.y) <= 30 && Math.abs(bacteria[i].z-this.z) <= 30 && !bacteria[i].eating) {
+      if(Math.abs(bacteria[i].x-this.x) >= 30  && Math.abs(bacteria[i].y-this.y) >= 30 && Math.abs(bacteria[i].z-this.z) >= 30 && bacteria[i].eating) {
+        bacteria[i].eating = false;
       }
     }
     if(eatCounter == numBacteria) {
-      this.x = (int) (Math.random()*(width-20)+10);
-      this.y = (int) (Math.random()*(height-20)+10);
-      this.z = (int) (Math.random()*(600));
-      eatCounter = 0;
+      this.x = (int) (Math.random()*800-400);
+      this.y = (int) (Math.random()*800-400);
+      this.z = (int) (Math.random()*800-400);
+      eatCounter = 0; 
       eaten++;
+      for(int i = 0; i < numBacteria; i++) {
+        bacteria[i].x += Math.random()*100-50;
+        bacteria[i].y += Math.random()*100-50;
+        bacteria[i].z += Math.random()*100-50;
+      }
     }
   }
   void moveCam() {
@@ -42,7 +51,7 @@ class Food {
 
 class Bacteria {
   int col;
-  float x, y, z;
+  float x, y, z, disX, disY, disZ;
   boolean eating;
   public Bacteria(float x, float y, float z, int col, boolean eating) {
     this.x = x;
@@ -55,6 +64,11 @@ class Bacteria {
     fill(col);
     pushMatrix();
     translate(this.x, this.y, this.z);
+    disX = this.x-food.x;
+    disY = this.y-food.y;
+    disZ = this.z-food.z;
+    rotateX((float) (Math.atan(-disZ/disY)));
+    rotateY((float) (Math.atan2(disX, disZ))+PI);
     bacteriaShape(mult, this.col);
     popMatrix();
   }
@@ -62,7 +76,7 @@ class Bacteria {
     this.x += Math.random()*(food.x-this.x)/10-(food.x-this.x)/25;
     this.y += Math.random()*(food.y-this.y)/10-(food.y-this.y)/25;
     this.z += Math.random()*(food.z-this.z)/10-(food.z-this.z)/25;
-    if(Math.abs(food.x-this.x) <= 30  && Math.abs(food.y-this.y) <= 30 && Math.abs(food.z-this.z) <= 30) {
+    if(Math.abs(disX) <= 30  && Math.abs(disY) <= 30 && Math.abs(disZ) <= 20) {
       this.eating = true;
       food.eatCounter++;
     }
@@ -130,9 +144,3 @@ void bacteriaShape(float mult, int bactCol) {
   popMatrix();
   noStroke();
 }
-
-
-
-
-
-
