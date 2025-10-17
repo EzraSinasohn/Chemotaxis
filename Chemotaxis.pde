@@ -13,7 +13,6 @@ class Food {
     this.eatCounter = eatCounter;
   }
   void show() {
-    rot += PI/50;
     pushMatrix();
     fill(255, 0, 0);
     translate(this.x, this.y, this.z);
@@ -21,8 +20,11 @@ class Food {
     fill(0, 200, 0);
     translate(0, -20/((eatCounter/3)+1), 0);
     box(5/((eatCounter/3)+1), 10/((eatCounter/3)+1), 5/((eatCounter/3)+1));
+    popMatrix();
+    pushMatrix();
+    rot += PI/50;
+    translate(this.x, this.y-20/((eatCounter/3)+1)-10, this.z);
     rotateY(rot);
-    translate(0, -10, 0);
     text(eaten, 0, 0);
     popMatrix();
   }
