@@ -103,7 +103,6 @@ void draw() {
    food.show();
    bacteria[i].walk();
    bacteria[i].show();
-   System.out.println(eaten);
  }
    if(ate) {
     for(int i = 0; i < bacteria.length; i++) {bacteria[i].eating = false;}
