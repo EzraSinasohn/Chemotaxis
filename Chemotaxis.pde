@@ -1,5 +1,7 @@
 float camX, camY;
-int numBacteria = 10, mult = 1, eaten = 0;
+int numBacteria = 10, eaten = -1;
+float mult = 0.5;
+boolean ate;
 Food food = new Food(0, 0, 0, 0);
 class Food {
   int x, y, z, count, eatCounter;
@@ -19,30 +21,26 @@ class Food {
     fill(0, 200, 0);
     translate(0, -20/((eatCounter/3)+1), 0);
     box(5/((eatCounter/3)+1), 10/((eatCounter/3)+1), 5/((eatCounter/3)+1));
-    translate(0, -10, 0);
-    pushMatrix();
     rotateY(rot);
+    translate(0, -10, 0);
     text(eaten, 0, 0);
-    popMatrix();
     popMatrix();
   }
   void checkEat() {
-    for(int i = 0; i < numBacteria; i++) {
-      if(Math.abs(bacteria[i].x-this.x) >= 30  && Math.abs(bacteria[i].y-this.y) >= 30 && Math.abs(bacteria[i].z-this.z) >= 30 && bacteria[i].eating) {
-        bacteria[i].eating = false;
-      }
+    eatCounter = 0;
+    for(int i = 0; i < bacteria.length; i++) {
+      if(bacteria[i].eating) {eatCounter++;}
     }
-    if(eatCounter == numBacteria) {
-      this.x = (int) (Math.random()*800-400);
-      this.y = (int) (Math.random()*800-400);
+    if(eatCounter == bacteria.length) {
+      this.x = (int) (Math.random()*800);
+      this.y = (int) (Math.random()*800);
       this.z = (int) (Math.random()*800-400);
-      eatCounter = 0; 
-      eaten++;
       for(int i = 0; i < numBacteria; i++) {
         bacteria[i].x += Math.random()*100-50;
         bacteria[i].y += Math.random()*100-50;
         bacteria[i].z += Math.random()*100-50;
       }
+      ate = true;
     }
   }
   void moveCam() {
@@ -80,7 +78,8 @@ class Bacteria {
     this.z += Math.random()*(food.z-this.z)/10-(food.z-this.z)/25;
     if(Math.abs(disX) <= 30  && Math.abs(disY) <= 30 && Math.abs(disZ) <= 20) {
       this.eating = true;
-      food.eatCounter++;
+    } else {
+      this.eating = false;
     }
   }
 }
@@ -97,16 +96,22 @@ void setup() {
 void draw() {
  background(100);
  lights();
- for(int i = 0; i < numBacteria; i++) {
+ for(int i = 0; i < bacteria.length; i++) {
    if(!mousePressed) {food.moveCam();}
    camera(width/2.0, height/2.0, height/2.0/tan(PI*30.0/180.0), camX, camY, 0, 0, 1.0, 0);
    food.checkEat();
    food.show();
    bacteria[i].walk();
    bacteria[i].show();
+   System.out.println(eaten);
  }
- if(eaten == 5) {
-    eaten = 0;
+   if(ate) {
+    for(int i = 0; i < bacteria.length; i++) {bacteria[i].eating = false;}
+    ate = false;
+    eaten++;
+    }
+ if(eaten >= 5) {
+    eaten = -1;
     numBacteria *= 1.5;
     bacteria = new Bacteria[numBacteria];
     for(int i = 0; i < numBacteria; i++) {bacteria[i] = new Bacteria(width/2, height/2, 0, color((int) (Math.random()*205+50), (int) (Math.random()*205+50), (int) (Math.random()*205+50)), false);}
