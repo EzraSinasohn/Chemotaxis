@@ -25,7 +25,7 @@ class Food {
     rot += PI/50;
     translate(this.x, this.y-20/((eatCounter/3)+1)-10, this.z);
     rotateY(rot);
-    //textAlign(CENTER);
+    textAlign(RIGHT);
     text(eaten, 0, 0);
     popMatrix();
   }
