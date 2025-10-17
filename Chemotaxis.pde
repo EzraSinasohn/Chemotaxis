@@ -24,8 +24,6 @@ class Food {
     pushMatrix();
     rot += PI/50;
     translate(this.x, this.y-20/((eatCounter/3)+1)-10, this.z);
-    rotateX(PI);
-    rotateZ(PI);
     rotateY(rot);
     textAlign(CENTER);
     text(eaten, 0, 0);
