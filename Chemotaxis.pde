@@ -13,7 +13,7 @@ class Food {
     this.eatCounter = eatCounter;
   }
   void show() {
-    rot += PI/500;
+    rot += PI/50;
     pushMatrix();
     fill(255, 0, 0);
     translate(this.x, this.y, this.z);
@@ -96,11 +96,11 @@ void setup() {
 void draw() {
  background(100);
  lights();
+ food.checkEat();
+ food.show();
  for(int i = 0; i < bacteria.length; i++) {
    if(!mousePressed) {food.moveCam();}
    camera(width/2.0, height/2.0, height/2.0/tan(PI*30.0/180.0), camX, camY, 0, 0, 1.0, 0);
-   food.checkEat();
-   food.show();
    bacteria[i].walk();
    bacteria[i].show();
  }
